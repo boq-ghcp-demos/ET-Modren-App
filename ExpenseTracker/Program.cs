@@ -120,11 +120,6 @@ using (var scope = app.Services.CreateScope())
                 context.SaveChanges();
                 
                 logger.LogInformation("User settings created for test user.");
-                
-                // Add sample expenses for testing
-                logger.LogInformation("Adding sample expenses for testing...");
-                await TestExpenses.AddSampleExpenses(context, userManager);
-                logger.LogInformation("Sample expenses added successfully.");
             }
             else
             {
