@@ -57,6 +57,32 @@ public class HomeController : Controller
                 UserDefaultCurrency = await _userSettingsService.GetUserDefaultCurrencyAsync(userId)
             };
 
+            // Get annualized recurring expenses for this year
+            var annualizedRecurring = await _expenseService.GetAnnualizedRecurringExpensesTotalAsync(
+                userId,
+                new DateTime(currentDate.Year, 1, 1),
+                currentDate);
+
+            // Sum annualized recurring expenses (use default currency as primary, fall back to all if none match)
+            decimal annualizedTotal = 0;
+            
+            if (annualizedRecurring.Any())
+            {
+                // First try to sum by user's default currency
+                if (annualizedRecurring.ContainsKey(dashboard.UserDefaultCurrency))
+                {
+                    annualizedTotal = annualizedRecurring[dashboard.UserDefaultCurrency];
+                }
+                else
+                {
+                    // If no matching currency, sum all (they're all in their respective currencies)
+                    annualizedTotal = annualizedRecurring.Values.Sum();
+                }
+            }
+
+            dashboard.TotalAnnualizedRecurringExpenses = annualizedTotal;
+            dashboard.ConsolidatedYearTotal = dashboard.TotalExpensesThisYear + dashboard.TotalAnnualizedRecurringExpenses;
+
             // Calculate total transactions for this month
             var monthlyExpenses = await _expenseService.GetUserExpensesAsync(
                 userId, 1, int.MaxValue);

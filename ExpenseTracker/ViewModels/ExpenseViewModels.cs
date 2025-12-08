@@ -86,6 +86,8 @@ namespace ExpenseTracker.ViewModels
     {
         public decimal TotalExpensesThisMonth { get; set; }
         public decimal TotalExpensesThisYear { get; set; }
+        public decimal TotalAnnualizedRecurringExpenses { get; set; }
+        public decimal ConsolidatedYearTotal { get; set; }
         public int TotalTransactionsThisMonth { get; set; }
         public Dictionary<string, decimal> CategoryBreakdown { get; set; } = new();
         public Dictionary<string, decimal> CurrencyBreakdown { get; set; } = new();

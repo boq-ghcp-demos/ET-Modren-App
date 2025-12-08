@@ -192,5 +192,45 @@ namespace ExpenseTracker.Services
                 .GroupBy(e => e.Category?.Name ?? "Uncategorized")
                 .ToDictionary(g => g.Key, g => g.Sum(e => e.Amount));
         }
+
+        public async Task<Dictionary<string, decimal>> GetAnnualizedRecurringExpensesTotalAsync(int userId, DateTime? fromDate = null, DateTime? toDate = null)
+        {
+            // Get all active recurring expenses for the user
+            var recurringExpenses = await _context.Expenses
+                .Where(e => e.UserId == userId && e.IsRecurring && !e.IsDeleted)
+                .ToListAsync();
+
+            // Filter for active recurring expenses (not ended)
+            var now = DateTime.Now;
+            var activeRecurring = recurringExpenses
+                .Where(e => e.RecurringEndDate == null || e.RecurringEndDate >= now)
+                .ToList();
+
+            // Calculate annualized total grouped by currency
+            var annualizedTotals = activeRecurring
+                .GroupBy(e => e.Currency)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.Sum(e => CalculateAnnualizedAmount(e.Amount, e.RecurringFrequency))
+                );
+
+            return annualizedTotals;
+        }
+
+        private decimal CalculateAnnualizedAmount(decimal amount, RecurringFrequency? frequency)
+        {
+            if (frequency == null)
+                return 0;
+
+            return frequency switch
+            {
+                RecurringFrequency.Weekly => amount * 52,
+                RecurringFrequency.Fortnightly => amount * 26,
+                RecurringFrequency.Monthly => amount * 12,
+                RecurringFrequency.Quarterly => amount * 4,
+                RecurringFrequency.Annually => amount,
+                _ => 0
+            };
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace ExpenseTracker.Services
             string? currency, bool? isTaxDeductible, DateTime? fromDate, DateTime? toDate);
         Task<IEnumerable<Expense>> GetExpensesByCategoryAsync(int userId, int categoryId);
         Task<IEnumerable<Expense>> GetRecurringExpensesAsync(int userId);
+        Task<Dictionary<string, decimal>> GetAnnualizedRecurringExpensesTotalAsync(int userId, DateTime? fromDate = null, DateTime? toDate = null);
         Task<decimal> GetTotalExpensesAsync(int userId, DateTime? fromDate = null, DateTime? toDate = null);
         Task<Dictionary<string, decimal>> GetExpensesByCurrencyAsync(int userId, DateTime? fromDate = null, DateTime? toDate = null);
         Task<Dictionary<string, decimal>> GetExpensesByCategoryAsync(int userId, DateTime? fromDate = null, DateTime? toDate = null);

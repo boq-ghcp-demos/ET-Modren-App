@@ -120,6 +120,53 @@ using (var scope = app.Services.CreateScope())
                 context.SaveChanges();
                 
                 logger.LogInformation("User settings created for test user.");
+                
+                // Add sample recurring expenses for testing
+                var existingRecurring = context.Expenses
+                    .Where(e => e.UserId == testUser.Id && e.IsRecurring && !e.IsDeleted)
+                    .Any();
+                
+                if (!existingRecurring)
+                {
+                    logger.LogInformation("Adding sample recurring expenses for testing...");
+                    var recurringExpenses = new List<Expense>
+                    {
+                        new Expense
+                        {
+                            UserId = testUser.Id,
+                            CategoryId = 5, // Bills & Utilities
+                            Description = "Monthly Internet Bill",
+                            Amount = 50m,
+                            Currency = "USD",
+                            ExpenseDate = DateTime.Today,
+                            IsTaxDeductible = false,
+                            IsRecurring = true,
+                            RecurringFrequency = RecurringFrequency.Monthly,
+                            RecurringEndDate = null,
+                            CreatedBy = testUser.Id,
+                            CreatedDate = DateTime.UtcNow
+                        },
+                        new Expense
+                        {
+                            UserId = testUser.Id,
+                            CategoryId = 6, // Healthcare
+                            Description = "Weekly Gym Membership",
+                            Amount = 25m,
+                            Currency = "USD",
+                            ExpenseDate = DateTime.Today,
+                            IsTaxDeductible = false,
+                            IsRecurring = true,
+                            RecurringFrequency = RecurringFrequency.Weekly,
+                            RecurringEndDate = null,
+                            CreatedBy = testUser.Id,
+                            CreatedDate = DateTime.UtcNow
+                        }
+                    };
+                    
+                    context.Expenses.AddRange(recurringExpenses);
+                    context.SaveChanges();
+                    logger.LogInformation("Sample recurring expenses added successfully.");
+                }
             }
             else
             {
