@@ -48,7 +48,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddScoped<IExpenseService, ExpenseService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IUserSettingsService, UserSettingsService>();
-builder.Services.AddScoped<IReportingService, ReportingService>();
 
 // Register exchange rate service with HttpClient
 builder.Services.AddHttpClient<IExchangeRateService, ExchangeRateService>();

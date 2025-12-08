@@ -13,18 +13,15 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IExpenseService _expenseService;
     private readonly IUserSettingsService _userSettingsService;
-    private readonly IReportingService _reportingService;
 
     public HomeController(
         ILogger<HomeController> logger,
         IExpenseService expenseService,
-        IUserSettingsService userSettingsService,
-        IReportingService reportingService)
+        IUserSettingsService userSettingsService)
     {
         _logger = logger;
         _expenseService = expenseService;
         _userSettingsService = userSettingsService;
-        _reportingService = reportingService;
     }
 
     public async Task<IActionResult> Index()
@@ -60,9 +57,12 @@ public class HomeController : Controller
                 UserDefaultCurrency = await _userSettingsService.GetUserDefaultCurrencyAsync(userId)
             };
 
-            var monthlyReport = await _reportingService.GetMonthlyReportAsync(
-                userId, currentDate.Year, currentDate.Month);
-            dashboard.TotalTransactionsThisMonth = monthlyReport.TotalTransactions;
+            // Calculate total transactions for this month
+            var monthlyExpenses = await _expenseService.GetUserExpensesAsync(
+                userId, 1, int.MaxValue);
+            var startOfMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
+            dashboard.TotalTransactionsThisMonth = monthlyExpenses
+                .Count(e => e.ExpenseDate >= startOfMonth && e.ExpenseDate <= currentDate);
 
             return View(dashboard);
         }
