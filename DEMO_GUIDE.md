@@ -24,7 +24,6 @@ Make sure the application runs without errors on first startup.
 
 ```
 
-**Supporting Document**: `docs/ExpenseTracker_Modernization_Proposal.md` - Contains the modernization requirements and specifications.
 
 ## 🤖 2. Troubleshooting an Issue
 
@@ -35,3 +34,9 @@ Help me troubleshoot the following issue in this application:
 
 ```
 Note : Please attached the bug screenshot and logs showing the exception stack trace
+
+
+## 🤖 3. New Enhancement
+```
+Create a plan to implement a new enhancement: The dashboard should present a consolidated summary of all data in the “This Year” section. For recurring expenses, the system must annualize the amounts — for example, a monthly $50 expense should be calculated as 12 × $50 = $600, and a weekly $50 expense should be calculated as 52 × $50.
+```
