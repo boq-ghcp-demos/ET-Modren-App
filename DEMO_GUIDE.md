@@ -27,4 +27,11 @@ In this exercise, you will learn how to leverage Github Copilot to perform code 
 ```
 Create a plan to implement a new enhancement: The dashboard should present a consolidated summary of all data in the “This Year” section. For recurring expenses, the system must annualize the amounts — for example, a monthly $50 expense should be calculated as 12 × $50 = $600, and a weekly $50 expense should be calculated as 52 × $50.
 ```
-*
+## Exercise 2: Code Review with Github Copilot
+
+
+Application crashes when adding an expense with decimal amount enter 0.05 in the expense amount and crash. Take a screenshot of the application crash and include it in your prompt.
+
+``` 
+Please help me identify the root cause of this crash and suggest a fix.
+```
