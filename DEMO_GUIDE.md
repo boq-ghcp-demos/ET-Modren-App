@@ -35,3 +35,10 @@ Application crashes when adding an expense with decimal amount enter 0.05 in the
 ``` 
 Please help me identify the root cause of this crash and suggest a fix.
 ```
+
+
+## Exercise 3: Custom Agent ,select dotnet-upgrade agent from the list of agents and run the following prompt to analyze current .NET framework versions and create an upgrade plan.
+
+```
+Perform upgrade tasks on C#/.NET code including cleanup, modernization, and tech debt remediation.
+```
