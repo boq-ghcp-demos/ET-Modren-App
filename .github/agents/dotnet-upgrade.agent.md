@@ -1,6 +1,6 @@
 ---
 description: 'Perform janitorial tasks on C#/.NET code including cleanup, modernization, and tech debt remediation.'
-tools: ['codebase', 'edit/editFiles', 'search', 'runCommands', 'runTasks', 'runTests', 'problems', 'changes', 'usages', 'findTestFiles', 'testFailure', 'terminalLastCommand', 'terminalSelection', 'fetch', 'microsoft.docs.mcp']
+tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'azure-devops/*', 'microsoft-docs/*', 'agent', 'io.github.upstash/context7/*', 'vscjava.migrate-java-to-azure/appmod-build-project', 'vscjava.migrate-java-to-azure/appmod-java-run-test', 'vscjava.migrate-java-to-azure/appmod-python-setup-env', 'vscjava.migrate-java-to-azure/appmod-python-validate-syntax', 'vscjava.migrate-java-to-azure/appmod-python-validate-lint', 'vscjava.migrate-java-to-azure/appmod-python-run-test', 'todo']
 ---
 
 # .NET Upgrade Collection
